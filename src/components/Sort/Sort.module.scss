@@ -1,0 +1,65 @@
+$background-color-sort: #FFFFFF;
+$background-color-sort-checked: #2196F3;
+$border-color-sort: #DFE5EC;
+$border-color-sort-checked: #2196F3;
+$color-sort: #4A4A4A;
+$color-sort-checked: #FFFFFF;
+$font-family-sort: 'Open Sans', sans-serif;
+
+.sort {
+  min-width: 502px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  &-item {
+    margin: 0 -1px 0 0;
+    padding: 0;
+    display: inline-block;
+    box-sizing: border-box;
+
+    &:first-child label {
+      border-radius: 5px 0 0 5px;
+    }
+
+    &:last-child label {
+      border-radius: 0 5px 5px 0;
+    }
+  }
+
+  &-checkbox {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+
+    &+label {
+      width: 168px;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+
+      cursor: pointer;
+      padding: 15px;
+      user-select: none;
+
+      font-family: $font-family-sort;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 12px;
+      line-height: 20px;
+
+      background: $background-color-sort;
+      border: 1px solid $border-color-sort;
+      color: $color-sort;
+    }
+
+    &:checked + label {
+      background: $background-color-sort-checked;
+      color: $color-sort-checked;
+      border-color:$border-color-sort-checked;
+    }
+  }
+}
