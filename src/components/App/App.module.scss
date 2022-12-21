@@ -38,6 +38,7 @@ $font-family-button: 'Open Sans', sans-serif;
   letter-spacing: 0.5px;
   text-transform: uppercase;
   color: $button-color;
+  cursor: pointer;
 
   &:hover {
     filter: brightness(110%);

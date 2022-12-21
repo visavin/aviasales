@@ -58,6 +58,7 @@ $shape: url("data:image/svg+xml;charset=UTF-8,%3csvg width='12' height='8' viewB
       font-size: 13px;
       line-height: 20px;
       color: $color-filter;
+      cursor: pointer;
 
       &::before {
         content: '';

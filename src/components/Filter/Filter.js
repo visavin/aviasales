@@ -1,31 +1,49 @@
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+
+import { setFilter } from '../../actions'
+
 import classes from './Filter.module.scss'
 
 const Filter = () => {
+  const dispatch = useDispatch()
+  const filter = useSelector((state) => state.filter)
+
+  const handleInputChange = (event) => {
+    const value = event.target.checked
+    const name = event.target.name
+    dispatch(setFilter(name, value))
+  }
+
+  let elements = []
+
+  for (const prop in filter) {
+    if (Object.hasOwn(filter, prop)) {
+      const element = (
+        <li key={prop} className={classes['filter-item']}>
+          <input
+            className={classes['filter-checkbox']}
+            name={prop}
+            type="checkbox"
+            checked={filter[prop].value}
+            onChange={handleInputChange}
+            id={prop}
+          />
+          <label htmlFor={prop}>{filter[prop].display}</label>
+        </li>
+      )
+      elements.push(element)
+    }
+  }
+
+  useEffect(() => {
+    // console.log(filter)
+  }, [filter])
+
   return (
     <div className={classes.filter}>
       <h2 className={classes['filter-header']}>Количество пересадок</h2>
-      <ul className={classes['filter-list']}>
-        <li className={classes['filter-item']}>
-          <input type="checkbox" className={classes['filter-checkbox']} id="all" name="filter" value="all" />
-          <label htmlFor="all">Все</label>
-        </li>
-        <li className={classes['filter-item']}>
-          <input type="checkbox" className={classes['filter-checkbox']} id="0" name="filter" value="0" defaultChecked />
-          <label htmlFor="0">Без пересадок</label>
-        </li>
-        <li className={classes['filter-item']}>
-          <input type="checkbox" className={classes['filter-checkbox']} id="1" name="filter" value="1" defaultChecked />
-          <label htmlFor="1">1 пересадка</label>
-        </li>
-        <li className={classes['filter-item']}>
-          <input type="checkbox" className={classes['filter-checkbox']} id="2" name="filter" value="2" defaultChecked />
-          <label htmlFor="2">2 пересадки</label>
-        </li>
-        <li className={classes['filter-item']}>
-          <input type="checkbox" className={classes['filter-checkbox']} id="3" name="filter" value="3" />
-          <label htmlFor="3">3 пересадки</label>
-        </li>
-      </ul>
+      <ul className={classes['filter-list']}>{elements}</ul>
     </div>
   )
 }
