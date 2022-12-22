@@ -11,12 +11,15 @@ $font-family-sort: 'Open Sans', sans-serif;
   margin: 0;
   padding: 0;
   list-style: none;
+  display: flex;
+  flex-wrap: wrap;
 
   &-item {
     margin: 0 -1px 0 0;
     padding: 0;
     display: inline-block;
     box-sizing: border-box;
+    flex-grow: 1;
 
     &:first-child label {
       border-radius: 5px 0 0 5px;
@@ -33,7 +36,7 @@ $font-family-sort: 'Open Sans', sans-serif;
     opacity: 0;
 
     &+label {
-      width: 168px;
+      // min-width: 168px;
       box-sizing: border-box;
       display: flex;
       align-items: center;
