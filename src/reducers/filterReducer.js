@@ -1,15 +1,9 @@
 const initialState = {
-  allStopsChecked: { value: false, display: 'Все' },
-  nonStopsChecked: { value: false, display: 'Без пересадок' },
-  oneStopsChecked: { value: false, display: '1 пересадка' },
-  twoStopsChecked: { value: false, display: '2 пересадки' },
-  threeStopsChecked: { value: false, display: '3 пересадки' },
-  // fourStopsChecked: { value: false, display: '4 пересадки' },
-  // fiveStopsChecked: { value: false, display: '5 пересадок' },
-  // sixStopsChecked: { value: false, display: '6 пересадок' },
-  // sevenStopsChecked: { value: false, display: '7 пересадок' },
-  // eightStopsChecked: { value: false, display: '8 пересадок' },
-  // nineStopsChecked: { value: false, display: '9 пересадок' },
+  allStopsChecked: { value: true, display: 'Все' },
+  nonStopsChecked: { value: true, display: 'Без пересадок' },
+  oneStopsChecked: { value: true, display: '1 пересадка' },
+  twoStopsChecked: { value: true, display: '2 пересадки' },
+  threeStopsChecked: { value: true, display: '3 пересадки' },
 }
 
 export const filterReducer = (state = initialState, action) => {
