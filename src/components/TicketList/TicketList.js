@@ -1,32 +1,26 @@
-import { useContext, useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { LoadingOutlined } from '@ant-design/icons'
+import { Divider, Spin, Steps } from 'antd'
 
 import { TicketService } from '../context'
-import { fetchTickets } from '../../actions'
+import { fetchSearchId, fetchTickets, setDisplayCount } from '../../actions'
 
 import classes from './TicketList.module.scss'
 
 const TicketList = () => {
-  let timeoutId
-  let errorCount
   const dispatch = useDispatch()
+  const displayCount = useSelector((state) => state.display.displayCount)
   const tickets = useSelector((state) => state.tickets)
   const ticketSearchService = useContext(TicketService)
 
   useEffect(() => {
-    dispatch(fetchTickets(ticketSearchService))
-    return () => {
-      clearTimeout(timeoutId)
-    }
+    dispatch(fetchSearchId(ticketSearchService))
   }, [])
 
   useEffect(() => {
-    if (tickets.error) {
-      errorCount++
-      console.log(errorCount)
-      if (errorCount < 5) {
-        timeoutId = setTimeout(dispatch(fetchTickets(ticketSearchService)), 1000)
-      } else console.log('ошибка доступа к базе билетов, повторите запрос позже')
+    if (!tickets.stop || tickets.error) {
+      dispatch(fetchTickets(ticketSearchService, tickets.searchId))
     }
   }, [tickets])
 
@@ -101,7 +95,52 @@ const TicketList = () => {
     )
   })
 
-  return <ul className={classes['ticket-list']}>{elements}</ul>
+  const antIcon = (
+    <LoadingOutlined
+      style={{
+        fontSize: 48,
+      }}
+      spin
+    />
+  )
+
+  const spinner = !elements.length ? <Spin indicator={antIcon} /> : null
+
+  const onMoreButtonClick = () => dispatch(setDisplayCount(5))
+
+  const spliceList = elements.splice(displayCount)
+
+  const onMoreButton = spliceList.length ? (
+    <button className={classes.button} title="" onClick={onMoreButtonClick}>
+      Показать еще 5 билетов!
+    </button>
+  ) : null
+
+  const currentLoaderStep = !elements.length ? 0 : !tickets.stop ? 1 : 2
+
+  return (
+    <React.Fragment>
+      <Steps
+        progressDot
+        current={currentLoaderStep}
+        items={[
+          {
+            title: 'Start Loadind',
+          },
+          {
+            title: 'Loading in Progress',
+          },
+          {
+            title: 'All Tickets Loaded',
+          },
+        ]}
+      />
+      <Divider />
+      {spinner}
+      <ul className={classes['ticket-list']}>{elements}</ul>
+      {onMoreButton}
+    </React.Fragment>
+  )
 }
 
 export default TicketList

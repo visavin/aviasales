@@ -18,9 +18,6 @@ const App = () => {
         <div className={classes['right-section']}>
           <Sort />
           <TicketList />
-          <button className={classes.button} title="">
-            Показать еще 5 билетов!
-          </button>
         </div>
       </div>
     </React.Fragment>

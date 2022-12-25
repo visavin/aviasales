@@ -16,8 +16,7 @@ export default class TicketSearchService {
     return searchIdObj['searchId']
   }
 
-  async getTickets() {
-    const searchId = await this.getSearchId()
+  async getTickets(searchId) {
     return await this.getResource('/tickets', `?searchId=${searchId}`)
   }
 }

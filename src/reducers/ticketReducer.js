@@ -1,24 +1,32 @@
 const initialState = {
   tickets: [],
-  loading: true,
-  stop: true,
+  searchId: null,
+  stop: false,
   error: null,
 }
 
 export const ticketReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'FETCH_TICKETS_REQUEST':
+    case 'FETCH_SEARCH_ID_REQUEST':
       return {
         tickets: [],
-        loading: true,
-        stop: true,
+        searchId: null,
+        stop: false,
+        error: null,
+      }
+
+    case 'FETCH_SEARCH_ID_SUCCESS':
+      return {
+        tickets: [],
+        searchId: action.payload,
+        stop: false,
         error: null,
       }
 
     case 'FETCH_TICKETS_SUCCESS':
       return {
-        tickets: action.payload.tickets,
-        loading: false,
+        tickets: state.tickets.concat(action.payload.tickets),
+        searchId: state.searchId,
         stop: action.payload.stop,
         error: null,
       }
@@ -26,8 +34,8 @@ export const ticketReducer = (state = initialState, action) => {
     case 'FETCH_TICKETS_FAILURE':
       return {
         tickets: state.tickets,
-        loading: false,
-        stop: true,
+        searchId: state.searchId,
+        stop: false,
         error: action.payload,
       }
 
